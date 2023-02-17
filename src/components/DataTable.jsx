@@ -6,9 +6,9 @@ const DataTable = ({ data, filterId }) => {
 
 
 
-    const filteredData = data?.filter((user) => user.id == filterId)
+    const filteredData = data?.filter((user) => +user.id === +filterId)
 
-    console.log(filteredData);
+    console.log(filteredData[0]);
 
     return (
         <div className=''>
@@ -27,9 +27,9 @@ const DataTable = ({ data, filterId }) => {
                 </thead>
 
                 <tbody>
-                    {filterId == Number ?
+                    {+filterId  ?
                         <tr>
-                            {Object.values(filteredData).slice(0, 9).map((value, index) => (
+                            {Object.values(filteredData[0]).slice(0, 9).map((value, index) => (
                                 <td className='p-2 border' key={index}><span className='flex justify-center flex-wrap'>{value}</span></td>
                             ))}
                         </tr>
