@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 const Navbar = () => {
     return (
         <div className='w-full h-[80px] bg-blue'>
-            <nav className='w-[1440px] h-full flex justify-between mx-auto items-center'>
+            <nav className='max-w-[1440px] h-full flex justify-between mx-auto items-center px-2'>
                 <span className='text-[20px] uppercase'>
                     Astudio
                 </span>

@@ -1,9 +1,29 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import DataTable from '../components/DataTable'
 
 const Products = () => {
-  return (
-    <div>Products</div>
-  )
+  const [products, setProducts] = useState()
+
+    useEffect(() => {
+        async function getProducts() {
+            let res = await axios.get('https://dummyjson.com/products?limit=5')
+            let { products } = await res.data
+            setProducts(products)
+
+        }
+        getProducts()
+
+    }, [setProducts])
+
+
+
+
+    return (
+
+        <DataTable data={products} />
+
+    )
 }
 
 export default Products
