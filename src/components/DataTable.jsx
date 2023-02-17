@@ -1,8 +1,17 @@
 import React from 'react'
 
-const DataTable = ({ data }) => {
+
+
+const DataTable = ({ data, filterId }) => {
+
+
+
+    const filteredData = data?.filter((user) => user.id == filterId)
+
+    console.log(filteredData);
+
     return (
-        <div className='p-10 w-screen'>
+        <div className=''>
             <table className='table-fixed border w-full'>
                 <thead>
                     <tr className='bg-blue'>
@@ -18,19 +27,28 @@ const DataTable = ({ data }) => {
                 </thead>
 
                 <tbody>
-                    {data && data.map((user) => (
-
-                        <tr className='first:bg-grey'>
-                            {Object.values(user).slice(0, 9).map((value, index) => (
+                    {filterId == Number ?
+                        <tr>
+                            {Object.values(filteredData).slice(0, 9).map((value, index) => (
                                 <td className='p-2 border' key={index}><span className='flex justify-center flex-wrap'>{value}</span></td>
                             ))}
                         </tr>
+                        : data && data?.map((user, index) => (
 
-                    ))}
+                            <tr key={index} className='first:bg-grey'>
+                                {Object.values(user).slice(0, 9).map((value, index) => (
+                                    <td className='p-2 border' key={index}><span className='flex justify-center flex-wrap'>{value}</span></td>
+                                ))}
+                            </tr>
+
+                        ))}
+
 
 
                 </tbody>
             </table>
+
+
         </div>
     )
 }
