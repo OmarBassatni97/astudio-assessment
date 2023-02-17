@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const Navbar = () => {
     return (
         <div className='w-full h-[80px] bg-blue'>
@@ -8,9 +8,9 @@ const Navbar = () => {
                     Astudio
                 </span>
                 <div className='flex gap-8'>
-                    <span className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Home</span>
-                    <span className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Users</span>
-                    <span className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Products</span>
+                    <Link to='/' className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Home</Link>
+                    <Link to='/users' className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Users</Link>
+                    <Link to='/products' className='text-[15px] uppercase font-normal cursor-pointer hover:text-grey duration-300'>Products</Link>
                 </div>
 
             </nav>
