@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Neutra";
+  src: local("Neutra"),
+   url("./fonts/Neutra/NeutraText-Book.otf") format("truetype");
+ }
+
+ body{
+  font-family: 'Neutra';
+ }
