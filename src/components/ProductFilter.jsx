@@ -10,7 +10,7 @@ const ProductFilter = () => {
     const [searchValue, setSearchValue] = useState('')
     const [title, setTitle] = useState('')
     const [brand, setBrand] = useState('')
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState('all')
 
     useEffect(() => {
         async function getLimitedProducts() {
@@ -20,7 +20,39 @@ const ProductFilter = () => {
         }
         getLimitedProducts()
 
-    }, [entriesValue])
+    }, [entriesValue, title, brand])
+
+
+    const filterByCategory = async (e) => {
+        setCategory(e.target.value)
+        setTitle('');
+        setBrand('');
+        const { data: { products } } = await axios.get(`https://dummyjson.com/products/category/${category}`);
+        if (!products) return;
+        console.log(products);
+        // setProduct(products);
+
+    };
+    const filterByTitle = async (e) => {
+        e.preventDefault()
+        setCategory('');
+        setBrand('');
+        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${title}`);
+        if (!products) return;
+        console.log(products);
+        setProduct(products);
+
+    };
+    const filterByBrand = async (e) => {
+        e.preventDefault()
+        setCategory('');
+        setTitle('');
+        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}`);
+        if (!products) return;
+        console.log(products);
+        setProduct(products);
+
+    };
 
 
 
@@ -40,17 +72,20 @@ const ProductFilter = () => {
                     <BiSearch className=' text-grey cursor-pointer hover:text-black' size={25} onClick={() => setShowSearch(!showSearch)} />
                     {showSearch && <input className='outline-none border rounded p-1' type='number' value={searchValue} onChange={(e) => setSearchValue(e.target.value)} placeholder='search by ID' />}
                 </span>
-                <form >
+                <form onSubmit={filterByTitle}>
                     <input required value={title} onChange={(e) => setTitle(e.target.value)} name='firstName' type="text" placeholder='Search by title' className='border rounded outline-none p-1 mx-1' />
                 </form>
-                <form >
+                <form onSubmit={filterByBrand}>
                     <input required value={brand} onChange={(e) => setBrand(e.target.value)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
                 </form>
-
-                <select value={category} onChange={(e)=> setCategory(e.target.value)} name="category" id="category">
-                    <option value="all">All</option>
+                <label htmlFor="category">Category:</label>
+                <select value={category} onChange={(e) => filterByCategory(e)} name="category" id="category" className='border p-1 rounded mx-2'>
+                    <option selected value="all">All</option>
                     <option value="laptops">Laptops</option>
+                    <option value="smartphones">Smartphones</option>
                 </select>
+
+
             </div>
             <DataTable perPage={entriesValue} data={product} filterId={searchValue} />
         </main>
