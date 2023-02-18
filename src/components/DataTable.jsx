@@ -27,7 +27,7 @@ const DataTable = ({ data, filterId, perPage }) => {
                 </thead>
 
                 <tbody>
-                    {+filterId && filterId <= perPage ?
+                    {+filterId && filterId <= perPage && filterId > 0 ?
                         <tr>
                             {Object?.values(filteredData[0])?.slice(0, 9).map((value, index) => (
                                 <td className='p-2 border' key={index}><span className='flex justify-center flex-wrap'>{value}</span></td>
