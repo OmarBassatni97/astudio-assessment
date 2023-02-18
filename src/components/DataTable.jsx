@@ -2,13 +2,13 @@ import React from 'react'
 
 
 
-const DataTable = ({ data, filterId }) => {
+const DataTable = ({ data, filterId, perPage }) => {
 
 
 
     const filteredData = data?.filter((user) => +user.id === +filterId)
 
-    console.log(filteredData[0]);
+
 
     return (
         <div className=''>
@@ -27,9 +27,9 @@ const DataTable = ({ data, filterId }) => {
                 </thead>
 
                 <tbody>
-                    {+filterId  ?
+                    {+filterId && filterId <= perPage ?
                         <tr>
-                            {Object.values(filteredData[0]).slice(0, 9).map((value, index) => (
+                            {Object?.values(filteredData[0])?.slice(0, 9).map((value, index) => (
                                 <td className='p-2 border' key={index}><span className='flex justify-center flex-wrap'>{value}</span></td>
                             ))}
                         </tr>
