@@ -19,7 +19,7 @@ const ProductFilter = () => {
         }
         getLimitedProducts()
 
-    }, [entriesValue, title, brand])
+    }, [entriesValue, title, setBrand])
 
 
     const filterByCategory = async (e) => {
@@ -51,13 +51,12 @@ const ProductFilter = () => {
 
     };
     const filterByBrand = async (e) => {
-        e.preventDefault()
+        setBrand(e.target.value)
         setTitle('');
-        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}`);
-        if (!products) return;
-        console.log(products);
+        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}&limit=${entriesValue}`);
+        if (products === []) return;
         setProduct(products);
-
+        console.log(products)
     };
 
 
@@ -81,9 +80,9 @@ const ProductFilter = () => {
                 <form onSubmit={filterByTitle}>
                     <input required value={title} onChange={(e) => setTitle(e.target.value)} name='firstName' type="text" placeholder='Search by title' className='border rounded outline-none p-1 mx-1' />
                 </form>
-                <form onSubmit={filterByBrand}>
-                    <input required value={brand} onChange={(e) => setBrand(e.target.value)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
-                </form>
+
+                <input required value={brand} onChange={(e) => filterByBrand(e)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
+
                 <label htmlFor="category">Category:</label>
                 <select defaultValue='all' onChange={(e) => filterByCategory(e)} name="category" id="category" className='border p-1 rounded mx-2'>
                     <option value="all">All</option>
