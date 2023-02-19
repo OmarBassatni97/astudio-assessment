@@ -58,6 +58,7 @@ const UsersFilter = () => {
     return (
 
         <main className='p-10'>
+            <h1>Home/Users</h1>
             <div className='flex py-10 items-center'>
                 <select onChange={(e) => setEntriesValue(e.target.value)} name="page-size" id="size">
                     <option value="5">5</option>
