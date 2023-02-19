@@ -9,7 +9,6 @@ const UsersFilter = () => {
     const [showSearch, setShowSearch] = useState(false)
     const [searchValue, setSearchValue] = useState('')
     const [firstName, setFirstName] = useState('')
-    const [gender, setGender] = useState('')
     const [email, setEmail] = useState('')
 
     useEffect(() => {
@@ -24,7 +23,6 @@ const UsersFilter = () => {
 
     const filterByName = async (e) => {
         e.preventDefault()
-        setGender('')
         setEmail('')
         const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=firstName&value=${firstName}`)
         if (!users) return;
@@ -32,19 +30,32 @@ const UsersFilter = () => {
 
 
     }
+    // const filterByGender = async (e) => {
+    //     e.preventDefault();
+    //     setFirstName('');
+    //     setEmail('');
+    //     const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=gender&value=${gender}&limit=${entriesValue}`);
+    //     if (!users) return;
+    //     setUser(users);
+
+    // };
     const filterByGender = async (e) => {
-        e.preventDefault();
         setFirstName('');
         setEmail('');
-        const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=gender&value=${gender}`);
-        if (!users) return;
-        setUser(users);
-
+        if (e.target.value === 'all') {
+            const { data: { users } } = await axios.get(`https://dummyjson.com/users?limit=${entriesValue}`);
+            if (!users) return;
+            setUser(users);
+        }
+        else {
+            const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=gender&value=${e.target.value}&limit=${entriesValue}`);
+            if (!users) return;
+            setUser(users);
+        }
     };
     const filterByEmail = async (e) => {
         e.preventDefault();
         setFirstName('');
-        setGender('');
         const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=email&value=${email}`);
         if (!users) return;
         setUser(users);
@@ -73,10 +84,15 @@ const UsersFilter = () => {
                 <form onSubmit={filterByEmail}>
                     <input required value={email} onChange={(e) => setEmail(e.target.value)} name='email' type="text" placeholder='Search by email' className='border rounded outline-none p-1 mx-1' />
                 </form>
-                <form onSubmit={filterByGender}>
+                {/* <form onSubmit={filterByGender}>
                     <input required value={gender} onChange={(e) => setGender(e.target.value)} name='gender' type="text" placeholder='Search by gender' className='border rounded outline-none p-1 mx-1' />
-                </form>
-
+                </form> */}
+                <label htmlFor="gender">Gender:</label>
+                <select defaultValue='all' onChange={(e) => filterByGender(e)} name="gender" id="gender" className='border p-1 rounded mx-2'>
+                    <option value="all">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
             </div>
             <DataTable perPage={entriesValue} data={user} filterId={searchValue} />
         </main>

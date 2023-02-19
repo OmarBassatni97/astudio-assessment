@@ -19,14 +19,14 @@ const ProductFilter = () => {
         }
         getLimitedProducts()
 
-    }, [entriesValue, title, setBrand])
+    }, [entriesValue, title, brand])
 
 
     const filterByCategory = async (e) => {
         setTitle('');
         setBrand('');
         if (e.target.value === 'all') {
-            const { data: { products } } = await axios.get(`https://dummyjson.com/products`);
+            const { data: { products } } = await axios.get(`https://dummyjson.com/products?limit=${entriesValue}`);
             if (!products) return;
             setProduct(products);
         }
@@ -35,11 +35,6 @@ const ProductFilter = () => {
             if (!products) return;
             setProduct(products);
         }
-
-
-
-
-
     };
     const filterByTitle = async (e) => {
         e.preventDefault()
@@ -47,16 +42,19 @@ const ProductFilter = () => {
         const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${title}`);
         if (!products) return;
         console.log(products);
+        console.log(title);
         setProduct(products);
+
 
     };
     const filterByBrand = async (e) => {
-        setBrand(e.target.value)
+        e.preventDefault()
         setTitle('');
-        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}&limit=${entriesValue}`);
-        if (products === []) return;
+        const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}`);
+        if (!products) return;
         setProduct(products);
         console.log(products)
+        console.log(brand);
     };
 
 
@@ -80,9 +78,9 @@ const ProductFilter = () => {
                 <form onSubmit={filterByTitle}>
                     <input required value={title} onChange={(e) => setTitle(e.target.value)} name='firstName' type="text" placeholder='Search by title' className='border rounded outline-none p-1 mx-1' />
                 </form>
-
-                <input required value={brand} onChange={(e) => filterByBrand(e)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
-
+                <form onSubmit={filterByBrand}>
+                    <input required value={brand} onChange={(e) => setBrand(e.target.value)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
+                </form>
                 <label htmlFor="category">Category:</label>
                 <select defaultValue='all' onChange={(e) => filterByCategory(e)} name="category" id="category" className='border p-1 rounded mx-2'>
                     <option value="all">All</option>
