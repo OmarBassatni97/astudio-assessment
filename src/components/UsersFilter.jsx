@@ -19,7 +19,7 @@ const UsersFilter = () => {
         }
         getLimitedUsers()
 
-    }, [entriesValue, firstName])
+    }, [entriesValue, firstName === '', email === ''])
 
     const filterByName = async (e) => {
         e.preventDefault()
@@ -30,7 +30,7 @@ const UsersFilter = () => {
 
 
     }
- 
+
     const filterByGender = async (e) => {
         setFirstName('');
         setEmail('');

@@ -19,7 +19,7 @@ const ProductFilter = () => {
         }
         getLimitedProducts()
 
-    }, [entriesValue, title, brand])
+    }, [entriesValue, title === '', brand === ''])
 
 
     const filterByCategory = async (e) => {
