@@ -74,7 +74,7 @@ const UsersFilter = () => {
                     <input required value={firstName} onChange={(e) => setFirstName(e.target.value)} name='firstName' type="text" placeholder='Search by name' className='border rounded outline-none p-1 mx-1' />
                 </form>
                 <form onSubmit={filterByEmail}>
-                    <input required value={email} onChange={(e) => setEmail(e.target.value)} name='email' type="text" placeholder='Search by email' className='border rounded outline-none p-1 mx-1' />
+                    <input required value={email} onChange={(e) => setEmail(e.target.value)} name='email' type="email" placeholder='Search by email' className='border rounded outline-none p-1 mx-1' />
                 </form>
                 <label htmlFor="gender">Gender:</label>
                 <select defaultValue='all' onChange={(e) => filterByGender(e)} name="gender" id="gender" className='border p-1 rounded mx-2'>
