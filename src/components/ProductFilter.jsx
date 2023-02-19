@@ -10,7 +10,6 @@ const ProductFilter = () => {
     const [searchValue, setSearchValue] = useState('')
     const [title, setTitle] = useState('')
     const [brand, setBrand] = useState('')
-    const [category, setCategory] = useState('all')
 
     useEffect(() => {
         async function getLimitedProducts() {
@@ -24,18 +23,26 @@ const ProductFilter = () => {
 
 
     const filterByCategory = async (e) => {
-        setCategory(e.target.value)
         setTitle('');
         setBrand('');
-        const { data: { products } } = await axios.get(`https://dummyjson.com/products/category/${category}`);
-        if (!products) return;
-        console.log(products);
-        // setProduct(products);
+        if (e.target.value === 'all') {
+            const { data: { products } } = await axios.get(`https://dummyjson.com/products`);
+            if (!products) return;
+            setProduct(products);
+        }
+        else {
+            const { data: { products } } = await axios.get(`https://dummyjson.com/products/category/${e.target.value}`);
+            if (!products) return;
+            setProduct(products);
+        }
+
+
+
+
 
     };
     const filterByTitle = async (e) => {
         e.preventDefault()
-        setCategory('');
         setBrand('');
         const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${title}`);
         if (!products) return;
@@ -45,7 +52,6 @@ const ProductFilter = () => {
     };
     const filterByBrand = async (e) => {
         e.preventDefault()
-        setCategory('');
         setTitle('');
         const { data: { products } } = await axios.get(`https://dummyjson.com/products/search?q=${brand}`);
         if (!products) return;
@@ -79,8 +85,8 @@ const ProductFilter = () => {
                     <input required value={brand} onChange={(e) => setBrand(e.target.value)} name='email' type="text" placeholder='Search by brand' className='border rounded outline-none p-1 mx-1' />
                 </form>
                 <label htmlFor="category">Category:</label>
-                <select value={category} onChange={(e) => filterByCategory(e)} name="category" id="category" className='border p-1 rounded mx-2'>
-                    <option selected value="all">All</option>
+                <select defaultValue='all' onChange={(e) => filterByCategory(e)} name="category" id="category" className='border p-1 rounded mx-2'>
+                    <option value="all">All</option>
                     <option value="laptops">Laptops</option>
                     <option value="smartphones">Smartphones</option>
                 </select>
