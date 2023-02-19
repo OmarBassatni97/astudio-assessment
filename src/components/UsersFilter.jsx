@@ -30,15 +30,7 @@ const UsersFilter = () => {
 
 
     }
-    // const filterByGender = async (e) => {
-    //     e.preventDefault();
-    //     setFirstName('');
-    //     setEmail('');
-    //     const { data: { users } } = await axios.get(`https://dummyjson.com/users/filter?key=gender&value=${gender}&limit=${entriesValue}`);
-    //     if (!users) return;
-    //     setUser(users);
-
-    // };
+ 
     const filterByGender = async (e) => {
         setFirstName('');
         setEmail('');
@@ -84,9 +76,6 @@ const UsersFilter = () => {
                 <form onSubmit={filterByEmail}>
                     <input required value={email} onChange={(e) => setEmail(e.target.value)} name='email' type="text" placeholder='Search by email' className='border rounded outline-none p-1 mx-1' />
                 </form>
-                {/* <form onSubmit={filterByGender}>
-                    <input required value={gender} onChange={(e) => setGender(e.target.value)} name='gender' type="text" placeholder='Search by gender' className='border rounded outline-none p-1 mx-1' />
-                </form> */}
                 <label htmlFor="gender">Gender:</label>
                 <select defaultValue='all' onChange={(e) => filterByGender(e)} name="gender" id="gender" className='border p-1 rounded mx-2'>
                     <option value="all">All</option>
